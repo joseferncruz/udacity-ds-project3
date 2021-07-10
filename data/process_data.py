@@ -86,26 +86,26 @@ def clean_data(df):
 ###############################################################################
 
 
-def save_data(df):
+def save_data(df, database_filepath):
     """Save dataframe into a local sql database.
 
     Parameters
     ----------
 
 
-    
+
     """
     # save output in a sql database
-    engine = create_engine('sqlite:///disaster_response_clean.db')
+    engine = create_engine(f'sqlite:///{database_filepath}')
     df.to_sql('disaster_response', engine, index=False)
 
 
 
 
 def main():
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 4:
 
-        messages_filepath, categories_filepath = sys.argv[1:]
+        messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
@@ -115,7 +115,7 @@ def main():
         df = clean_data(df)
 
         # print('Saving data...\n    DATABASE: {}'.format(database_filepath))
-        save_data(df)
+        save_data(df, database_filepath)
 
         print('Cleaned data saved to database!')
 
