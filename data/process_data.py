@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+"""
+Process data.
+@author: Jose Oliveira da Cruz. 2021
+"""
 # coding: utf-8
 
 # import libraries
@@ -6,20 +10,23 @@ import sys
 import pandas as pd
 from sqlalchemy import create_engine
 
-
+###############################################################################
 
 def load_data(messages_filepath, categories_filepath):
-    """Load dataset into a pandas dataframe.
+    """Load messages and categories into a single pandas dataframe.
 
     Parameters
     ----------
-
+    messages_filepath : str
+    
+    categories_filepath : str
 
     Returns
     -------
+    df : pd.DataFrame
+        A dataframe containing the categories and messages.
 
     """
-
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
 
@@ -36,13 +43,15 @@ def load_data(messages_filepath, categories_filepath):
 def clean_data(df):
     """Preprocess and clean data.
 
-
     Parameters
     ----------
-
+    df : pd.DataFrame
+        A dataframe containing the categories and messages.
 
     Returns
     -------
+    df : pd.DataFrame
+        Dataframe with preprocessed, clean messages/categories data.
 
     """
     # create a dataframe of the 36 individual category columns
@@ -65,10 +74,14 @@ def clean_data(df):
         categories[column] = pd.to_numeric(categories[column])
 
     # normalize pos class for the feature related
-    categories['related'].replace(2, 1, inplace=True)
+    categories['related'].replace(2, 0, inplace=True)
+
+    # Remove group with only one value (ie 0)
+    categories.drop("child_alone", axis=1, inplace=True)
 
     # drop the original categories column from `df`
     df.drop('categories', axis=1, inplace=True)
+
 
     # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat([df, categories], axis=1)
@@ -91,16 +104,18 @@ def save_data(df, database_filepath):
 
     Parameters
     ----------
-
-
-
+    df : pd.DataFrame
+    
+    database_filepath : str
+    
     """
     # save output in a sql database
     engine = create_engine(f'sqlite:///{database_filepath}')
+    
     df.to_sql('disaster_response', engine, index=False)
 
 
-
+###############################################################################
 
 def main():
     if len(sys.argv) == 4:
@@ -127,6 +142,7 @@ def main():
               'disaster_messages.csv disaster_categories.csv '\
               'DisasterResponse.db')
 
+###############################################################################
 
 if __name__ == '__main__':
     main()
