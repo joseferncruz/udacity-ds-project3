@@ -152,7 +152,7 @@ def tokenize(text):
 
     # lemmanitization
     lemmatizer = WordNetLemmatizer()
-    tokens_lem = [token.strip().lower() for token in lemmatizer.lemmatize(tokens)
+    tokens_lem = [lemmatizer.lemmatize(token.strip().lower()) for token in tokens
                   if token not in STOP_WORDS_ENG]
 
     return tokens_lem
