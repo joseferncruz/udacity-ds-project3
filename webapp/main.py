@@ -1,8 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
-from flask import Flask
 
+from flask import Flask
 app = Flask(__name__)
+
+import pickle
+
+class CustomUnpickler(pickle.Unpickler):
+
+    def find_class(self, module, name):
+        try:
+            return super().find_class(__name__, name)
+        except AttributeError:
+            return super().find_class(module, name)
+
+
 
 import json
 import plotly
@@ -98,8 +110,9 @@ engine = create_engine('sqlite:///./data/database.db')
 df = pd.read_sql_table('disaster_response', engine)
 
 # load model
-model = joblib.load("./models/classifier.pkl")
+# model = joblib.load("./models/classifier.pkl")
 
+model = CustomUnpickler(open('./models/classifier.pkl', 'rb')).load()
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
@@ -168,7 +181,7 @@ def go():
         query=query,
         classification_result=classification_results
     )
-#
+
 # if __name__ == '__main__':
 #     # Threaded option to enable multiple instances for multiple user access support
 #     app.run(threaded=True, port=5000)
