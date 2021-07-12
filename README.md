@@ -17,7 +17,7 @@ In this project I leverage skills in **data engineering**, **machine learning** 
 **🔴[Try it out here](https://classifying-disaster-messages.herokuapp.com/)👈**
 
 
-If you have any questions or suggestions, just send me a quick message via [LinkedIn](https://www.linkedin.com/in/josecruz-phd/). **Enjoy!**
+If you have any **questions** or **suggestions**, just send me a 💬 via [**LinkedIn**](https://www.linkedin.com/in/josecruz-phd/). **Enjoy!**
 
 
 ## Table of Contents
@@ -33,7 +33,9 @@ If you have any questions or suggestions, just send me a quick message via [Link
 
 ## 📖 Introduction
 
-[introduction]
+During disaster events, thousands of distress messages are sent to organizations that can provide help. Unfortunately, during these periods, these organizations have the least capacity to screen all the messages and redirected them to specific units that can help and relief.
+
+The purpose of this project is to build a machine learning model that can read messages and classify them into one of 36 different categories depending on their content. This would allow organization to better direct their resources and maximize assistance.
 
 
 ## 📂 Repository content
@@ -42,14 +44,14 @@ If you have any questions or suggestions, just send me a quick message via [Link
     | - template
     | |- master.html     # main page of web app
     | |- go.html         # classification result page of web app
-    |- routes.py         # Flask file that runs app
+    |- main.py         # Flask file that runs app
     |- __init__.py
 
     - data
-    |- categories.csv  # data to process
-    |- messages.csv    # data to process
-    |- process_data.py          # script to process data
-    |- database.db   # database to save clean data to
+    |- categories.csv     # data to process
+    |- messages.csv       # data to process
+    |- process_data.py    # script to process data
+    |- database.db        # database to save clean data to
 
     - models
     |- train_classifier.py      # script to train, evaluate and save classifier
@@ -62,6 +64,8 @@ If you have any questions or suggestions, just send me a quick message via [Link
     - classifying-disaster-messages.py
     - environment.yml
     - requirements.txt
+    - nltk.text
+    - runtime.txt
 <br> </br>
 
 ## 📊 The data
@@ -107,7 +111,7 @@ To regenerate the SQL database with the clean data and retrain the classifier:
   ```
 
 <br> </br>
-## 🔗 The webapp
+## 💻 The webapp
 
 You can access the deployed **[dashboard-app here](https://classifying-disaster-messages.herokuapp.com/)** (internet connection required, loading may take around 2 minutes). __Try it out!__
 
