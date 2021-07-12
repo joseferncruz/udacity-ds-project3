@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-from flask import Flask
-app = Flask(__name__)
-
+from myapp import app
 
 import json
 import plotly
@@ -169,3 +166,7 @@ def go():
         query=query,
         classification_result=classification_results
     )
+
+# if __name__ == '__main__':
+#     # Threaded option to enable multiple instances for multiple user access support
+#     app.run(threaded=True, port=5000)

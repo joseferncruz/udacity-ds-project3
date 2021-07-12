@@ -1,1 +1,1 @@
-from webapp import app
+from myapp import app
