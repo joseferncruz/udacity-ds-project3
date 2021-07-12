@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+from myapp import app
 
 import nltk
 from nltk.corpus import stopwords
@@ -12,13 +13,12 @@ nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 STOP_WORDS_ENG = stopwords.words('english')
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
 
-from flask import Flask
-from flask import render_template, request, jsonify
+from flask import render_template, request#, jsonify
 from plotly.graph_objs import Bar
 import joblib
+
+
 from sqlalchemy import create_engine
 
 from sklearn.base import BaseEstimator,\
