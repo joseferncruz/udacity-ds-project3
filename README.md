@@ -5,17 +5,16 @@ Using Natural Language Processing and supervised learning to classify distress m
 
 In this project I leverage skills in **data engineering**, **machine learning** and **web development** tools to build and deploy a web interactive application to categorize distress messages received during disasters.
 
-To achieve this goal I used:
-- **python3**:
+💡 To achieve this goal I used:
+- ✅**python3**:
   - Built extract, transform and the load (ETL) pipelines to process data to a sql database (__pandas, sqlalchemy__)
-  - Used Natural Language Processing (__nltk, sklearn__) techniques to prepare unstructured text for modeling
+  - Used Natural Language Processing (__nltk, sklearn__) techniques to prepare text for modeling
   - Built the machine learning multi-target classifier (__sklearn__) to classify text data
-- **HTML, Bootstrap4, JavaScript**: front-end webpage
-- **Flask**: back-end
-- **Heroku**: deployment from github
+- ✅**HTML, Bootstrap4, JavaScript**: front-end webpage
+- ✅**Flask**: back-end
+- ✅**Heroku**: deployment from github
 
-
-**📢Try it out here!**
+**🔴[Try it out here](https://classifying-disaster-messages.herokuapp.com/)👈**
 
 
 If you have any questions or suggestions, just send me a quick message via [LinkedIn](https://www.linkedin.com/in/josecruz-phd/). **Enjoy!**
@@ -32,42 +31,47 @@ If you have any questions or suggestions, just send me a quick message via [Link
 - [Licensing and Acknowledgements](#licensing-and-acknowledgements)
 
 
-## Introduction
+## 📖 Introduction
 
-During times of disasters it is important to classify. 
-
-This project includes an app that can be used by emergency workers to classify distress messages.
+[introduction]
 
 
-## Repository content
+## 📂 Repository content
 
-    - app
+    - webapp
     | - template
-    | |- master.html  # main page of web app
-    | |- go.html      # classification result page of web app
-    |- run.py         # Flask file that runs app
+    | |- master.html     # main page of web app
+    | |- go.html         # classification result page of web app
+    |- routes.py         # Flask file that runs app
+    |- __init__.py
 
     - data
-    |- disaster_categories.csv  # data to process
-    |- disaster_messages.csv    # data to process
+    |- categories.csv  # data to process
+    |- messages.csv    # data to process
     |- process_data.py          # script to process data
-    |- .db   # database to save clean data to
+    |- database.db   # database to save clean data to
 
     - models
     |- train_classifier.py      # script to train, evaluate and save classifier
     |- classifier.pkl           # saved model
 
     - README.md
+    - LICENSE
+    - Procfile
+    - .gitignore
+    - classifying-disaster-messages.py
     - environment.yml
+    - requirements.txt
+<br> </br>
 
+## 📊 The data
 
-## The data
-
-The dataset was provided by [Appen](https://appen.com/) and was made available by udacity content creators.
+The dataset was provided by [Appen](https://appen.com/) and was made available by Udacity content creators.
 
 The `data/message.csv` contains distress messages, both in their original form and the corresponding English translation. The `data/categories.csv` contains the target categories used to classify the messages.
 
-## Requirements
+<br> </br>
+## 🔨 Requirements
 
 To use the python scripts on your local machine, you need to:
 
@@ -79,7 +83,8 @@ conda env create -f environment.yml --name myenv
 conda activate myenv
 ```
 
-## Data Pipelines
+<br> </br>
+## ⚠️ Data Pipelines
 
 To regenerate the SQL database with the clean data and retrain the classifier:
 
@@ -93,22 +98,23 @@ To regenerate the SQL database with the clean data and retrain the classifier:
 2. Extract, Transform and Load the data into a SQL database:
 
   ```
-  python process_data.py disaster_messages.csv disaster_categories.csv database.db
+  python process_data.py messages.csv categories.csv database.db
   ```
-3. Use NPL and re-build the machine learning classifier:
+3. Use NLP to process text and re-build the machine learning classifier:
 
   ```
   python train_classifier.py ../data/database.db classifier.pkl
   ```
 
-## The webapp
+<br> </br>
+## 🔗 The webapp
 
-You can access the deployed **[dashboard-app here](https://noisy-nyc-app.herokuapp.com/)** (internet connection required, loading may take around 2 minutes). Try it out!
+You can access the deployed **[dashboard-app here](https://classifying-disaster-messages.herokuapp.com/)** (internet connection required, loading may take around 2 minutes). __Try it out!__
 
+<br> </br>
+## 📃 Licensing and Acknowledgements
 
-## Licensing and Acknowledgements
-
-The analysis and code generated during this project are licensed under a MIT License.
+The analysis and code generated during this project are licensed under a MIT License.⃣
 
 I want to thank [Udacity](https://www.udacity.com/) for providing the content of the project and [appen](https://appen.com/) for making these great data publicly available.
 
