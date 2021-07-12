@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from flask import Flask
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
+# https://stackoverflow.com/questions/27732354/unable-to-load-files-using-pickle-and-multiple-modules/58740659#58740659
 import pickle
-
 class CustomUnpickler(pickle.Unpickler):
 
     def find_class(self, module, name):
@@ -14,10 +14,7 @@ class CustomUnpickler(pickle.Unpickler):
         except AttributeError:
             return super().find_class(module, name)
 
-
-
 import json
-import plotly
 import pandas as pd
 
 import nltk
@@ -30,11 +27,8 @@ nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 STOP_WORDS_ENG = stopwords.words('english')
 
-
-from flask import render_template, request#, jsonify
+import plotly
 from plotly.graph_objs import Bar
-import joblib
-
 
 from sqlalchemy import create_engine
 
@@ -89,6 +83,7 @@ class GetNumberTokens(BaseEstimator, TransformerMixin):
 
     def get_number_tokens(self, text):
         """Return the number of tokens in a sentence."""
+
         # Extract a list of tokenized sentences
         n_tokens = len(tokenize(text))
 
@@ -110,8 +105,6 @@ engine = create_engine('sqlite:///./data/database.db')
 df = pd.read_sql_table('disaster_response', engine)
 
 # load model
-# model = joblib.load("./models/classifier.pkl")
-
 model = CustomUnpickler(open('./models/classifier.pkl', 'rb')).load()
 
 # index webpage displays cool visuals and receives user input text for model
@@ -181,7 +174,3 @@ def go():
         query=query,
         classification_result=classification_results
     )
-
-# if __name__ == '__main__':
-#     # Threaded option to enable multiple instances for multiple user access support
-#     app.run(threaded=True, port=5000)
