@@ -1,1 +1,1 @@
-web gunicorn classifying-disaster-messages:app
+web: gunicorn classifying-disaster-messages:app
