@@ -16,8 +16,10 @@ dependencies:
   - pip:
     - click==8.0.1
     - colorama==0.4.4
+    - flask==2.0.1
     - greenlet==1.1.0
     - gunicorn==20.1.0
+    - itsdangerous==2.0.1
     - jinja2==3.0.1
     - joblib==1.0.1
     - markupsafe==2.0.1
@@ -35,4 +37,5 @@ dependencies:
     - tenacity==8.0.1
     - threadpoolctl==2.2.0
     - tqdm==4.61.2
+    - werkzeug==2.0.1
 prefix: C:\Users\josec\anaconda3\envs\classifying-disaster-messages

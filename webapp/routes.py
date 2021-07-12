@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from flask import Flask
+app = Flask(__name__)
+
 
 import json
 import plotly
 import pandas as pd
-from webapp import app
 
 import nltk
 from nltk.corpus import stopwords
@@ -167,7 +169,3 @@ def go():
         query=query,
         classification_result=classification_results
     )
-
-# if __name__ == '__main__':
-#     # Threaded option to enable multiple instances for multiple user access support
-#     app.run(threaded=True, port=5000)
