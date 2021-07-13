@@ -3,7 +3,7 @@ Using Natural Language Processing and supervised learning to classify distress m
 **[Udacity Nanodegree in Data Science](https://www.udacity.com/course/data-scientist-nanodegree--nd025) - Project 3**
 
 
-In this project I leverage skills in **data engineering**, **machine learning** and **web development** tools to build and deploy a web interactive application to categorize distress messages received during disasters.
+In this project I leverage **data engineering**, **machine learning** and **web development** tools to build and deploy a web interactive application to categorize distress messages received during disasters.
 
 💡 To achieve this goal I used:
 - ✅**python3**:
@@ -42,20 +42,20 @@ The purpose of this project is to build a machine learning model that can read m
 
     - webapp
     | - template
-    | |- master.html     # main page of web app
-    | |- go.html         # classification result page of web app
-    |- main.py         # Flask file that runs app
+    | |- master.html          # main page of web app
+    | |- go.html              # classification result page of web app
+    |- main.py                # Flask file that runs app
     |- __init__.py
 
     - data
-    |- categories.csv     # data to process
-    |- messages.csv       # data to process
-    |- process_data.py    # script to process data
-    |- database.db        # database to save clean data to
+    |- categories.csv         # data to process
+    |- messages.csv           # data to process
+    |- process_data.py        # script to process data
+    |- database.db            # database to save clean data to
 
     - models
-    |- train_classifier.py      # script to train, evaluate and save classifier
-    |- classifier.pkl           # saved model
+    |- train_classifier.py    # script to train, evaluate and save classifier
+    |- classifier.pkl         # saved model
 
     - README.md
     - LICENSE
