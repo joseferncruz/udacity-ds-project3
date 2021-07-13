@@ -7,8 +7,10 @@ app = Flask(__name__)
 # https://stackoverflow.com/questions/27732354/unable-to-load-files-using-pickle-and-multiple-modules/58740659#58740659
 import pickle
 class CustomUnpickler(pickle.Unpickler):
+    """Costum class to unpickle models."""
 
     def find_class(self, module, name):
+        """Find class in unpickled model."""
         try:
             return super().find_class(__name__, name)
         except AttributeError:
@@ -16,6 +18,7 @@ class CustomUnpickler(pickle.Unpickler):
 
 import json
 import pandas as pd
+import re
 
 import nltk
 from nltk.corpus import stopwords
@@ -35,20 +38,38 @@ from sqlalchemy import create_engine
 from sklearn.base import BaseEstimator,\
                          TransformerMixin
 
+STOP_WORDS_ENG = stopwords.words('english')
 
 def tokenize(text):
+    """Case normalize, clean, tokenize and lemmatize text.
+
+    Parameters
+    ----------
+    text : str
+
+    Returns
+    -------
+    tokens_lem : list
+        List of clean, normalized and lemmatized tokens.
+
+    """
+    # Remove non-alphanumeric characters
+    text = re.sub(r'[^0-9a-zA-Z]', ' ', text)
+
+    # tokenization
     tokens = word_tokenize(text)
+
+    # lemmanitization
     lemmatizer = WordNetLemmatizer()
+    tokens_lem = [lemmatizer.lemmatize(token.strip().lower()) for token in tokens
+                  if token not in STOP_WORDS_ENG]
 
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
+    return tokens_lem
 
 
+# Classes to extract new features
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """Transformer class to extract the starting verb in text."""
 
     def starting_verb(self, text):
         """Return True if the first word is a Verb."""
@@ -69,36 +90,87 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return False
 
     def fit(self, X, y=None):
-
+        """Fit the data.
+        
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+        y : optional, array-like of shape (n_samples,) or (n_samples, n_targets)
+            
+        Returns
+        -------
+        self : returns an instance of self.
+        """
         return self
 
     def transform(self, X):
-
+        """Transform the data.
+        
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Training data
+    
+        Returns
+        -------
+        X_tagged : pd.DataFrame
+            Transformed data.     
+        """
         X_tagged = pd.Series(X).apply(self.starting_verb)
-
+        
         return pd.DataFrame(X_tagged)
 
-
 class GetNumberTokens(BaseEstimator, TransformerMixin):
-
+    """Transformer class to count the number of tokens in text."""
+    
     def get_number_tokens(self, text):
-        """Return the number of tokens in a sentence."""
-
+        """Return the number of tokens in a sentence.
+        
+        Parameters
+        ----------
+        text : str
+            
+        Returns
+        -------
+        n_tokens : int
+            The number of tokens in text.
+        """
         # Extract a list of tokenized sentences
         n_tokens = len(tokenize(text))
 
         return n_tokens
 
     def fit(self, X, y=None):
-
+        """Fit the data.
+        
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            
+        y : optional, array-like of shape (n_samples,) or (n_samples, n_targets)
+            
+        Returns
+        -------
+        self : returns an instance of self.
+        """        
         return self
 
     def transform(self, X):
-
+        """Transform the data.
+        
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Training data
+    
+        Returns
+        -------
+        X_tagged : pd.DataFrame
+            Transformed data.     
+        """        
         X_tagged = pd.Series(X).apply(self.get_number_tokens)
-
+        
         return pd.DataFrame(X_tagged)
-
 
 # load data
 engine = create_engine('sqlite:///./data/database.db')
