@@ -14,8 +14,9 @@ In this project I leverage **data engineering**, **machine learning** and **web 
 - ✅**Flask**: back-end
 - ✅**Heroku**: deployment from github
 
-**🔴[Try it out here](https://classifying-disaster-messages.herokuapp.com/)👈**
+#### 🔴[Try it out here](https://classifying-disaster-messages.herokuapp.com/)👈
 
+![Alt Text](media/app_example.gif)
 
 If you have any **questions** or **suggestions**, just send me a 💬 via [**LinkedIn**](https://www.linkedin.com/in/josecruz-phd/). **Enjoy!**
 
@@ -46,7 +47,8 @@ The purpose of this project is to build a machine learning model that can read m
     | |- go.html              # classification result page of web app
     |- main.py                # Flask file that runs app
     |- __init__.py
-
+    - media
+    | - app_example.gif
     - data
     |- categories.csv         # data to process
     |- messages.csv           # data to process
