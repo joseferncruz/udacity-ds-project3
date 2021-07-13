@@ -42,6 +42,7 @@ random_seed = 10
 
 # Classes to extract new features
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """Transformer class to extract the starting verb in text."""
 
     def starting_verb(self, text):
         """Return True if the first word is a Verb."""
@@ -62,11 +63,32 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return False
 
     def fit(self, X, y=None):
+        """Fit the data.
         
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+        y : optional, array-like of shape (n_samples,) or (n_samples, n_targets)
+            
+        Returns
+        -------
+        self : returns an instance of self.
+        """
         return self
 
     def transform(self, X):
+        """Transform the data.
         
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Training data
+    
+        Returns
+        -------
+        X_tagged : pd.DataFrame
+            Transformed data.     
+        """
         X_tagged = pd.Series(X).apply(self.starting_verb)
         
         return pd.DataFrame(X_tagged)
@@ -74,20 +96,53 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 ###############################################################################
 
 class GetNumberTokens(BaseEstimator, TransformerMixin):
-
+    """Transformer class to count the number of tokens in text."""
+    
     def get_number_tokens(self, text):
-        """Return the number of tokens in a sentence."""
+        """Return the number of tokens in a sentence.
+        
+        Parameters
+        ----------
+        text : str
+            
+        Returns
+        -------
+        n_tokens : int
+            The number of tokens in text.
+        """
         # Extract a list of tokenized sentences
         n_tokens = len(tokenize(text))
 
         return n_tokens
 
     def fit(self, X, y=None):
+        """Fit the data.
         
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            
+        y : optional, array-like of shape (n_samples,) or (n_samples, n_targets)
+            
+        Returns
+        -------
+        self : returns an instance of self.
+        """        
         return self
 
     def transform(self, X):
+        """Transform the data.
         
+        Parameters
+        ----------
+        X : {array-like, sparse matrix} of shape (n_samples, n_features)
+            Training data
+    
+        Returns
+        -------
+        X_tagged : pd.DataFrame
+            Transformed data.     
+        """        
         X_tagged = pd.Series(X).apply(self.get_number_tokens)
         
         return pd.DataFrame(X_tagged)
@@ -218,20 +273,18 @@ def evaluate_model(model, X_test, y_test, category_names):
 
 
 def save_model(model, model_filepath):
-    """Saves model into a pickle file.
+    """Save model into a pickle file.
 
     Parameters
     ----------
     model : sklean model
     model_filepath : str
     """
-
     pickle.dump(model.best_estimator_, open(model_filepath, 'wb'))
 
 
-
 def main():
-    
+    """Encapsulate the main entry point.""" 
     if len(sys.argv) == 3:
 
         # Parse command line filepaths
